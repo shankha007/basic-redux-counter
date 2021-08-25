@@ -4,9 +4,18 @@ const redux = require("redux");
 // Reducer is a pure function (so no side effects are allowed) -> same inputs leads to same output
 // Reducer function takes last updated state and action as arguments and returns updated state
 const counterReducer = (state = { counter: 0 }, action) => {
-  return {
-    counter: state.counter + 1,
-  };
+  if (action.type === "increment") {
+    return {
+      counter: state.counter + 1,
+    };
+  }
+  if (action.type === "decrement") {
+    return {
+      counter: state.counter - 1,
+    };
+  }
+
+  return state;
 };
 
 // Creating the central store
@@ -25,4 +34,5 @@ store.subscribe(counterSubscriber);
 // Initializing counterReducer or returning the updated state would not trigger the component function
 // To trigger the component function we need to dispatch an action
 // dispatch is a method which dispatches an action, and action is a js object with a 'type' property
-store.dispatch({ type: 'increment' });
+store.dispatch({ type: "increment" });
+store.dispatch({ type: "decrement" });
